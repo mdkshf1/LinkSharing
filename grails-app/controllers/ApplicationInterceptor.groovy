@@ -1,16 +1,11 @@
-/*
 package linksharing
-
-import ch.qos.logback.core.joran.conditional.IfAction
-
-
 class ApplicationInterceptor {
     public ApplicationInterceptor
     {
-        match controller:"Login" , action : 'loginHandler'
-        match controller:"Login" , action : 'logoutAction'
-        match controller: "user", action: "index"
-        match controller: "Util", action: "index"
+        //match controller:"Login" , action : 'loginHandler'
+        //match controller:"Login" , action : 'logoutAction'
+        //match controller: "user", action: "index"
+        //match controller: "Util", action: "index"
     }
 
     boolean before() {
@@ -29,4 +24,3 @@ class ApplicationInterceptor {
         // no-op
     }
 }
-*/

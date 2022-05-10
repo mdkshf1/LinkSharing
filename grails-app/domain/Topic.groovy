@@ -40,4 +40,34 @@ class Topic implements Serializable{
         //id composite:['name', 'createdBy']
         sort "name"
     }
+    /*
+    static getTrendingTopic()
+    {
+        Integer max = 0,topicNumber=0
+        List<Topic> topics = Topic.findAll()
+        topics.forEach(topic-> {
+            println topic
+            Set<Resource> resources = topic.resources
+            topicNumber = resources.size()
+            if (max<topicNumber)
+                max = topicNumber
+        }
+        )
+        println "ALL of the resources"
+        println topics.resources
+
+        println max
+    }*/
+
+    static getTrendingTopic()
+    {
+        def trendingTopics = Topic.createCriteria()
+        List<String> result = trendingTopics.list {
+            projections{
+                count("resources")
+            }
+        }
+        println "Final result is"
+        println result
+    }
 }

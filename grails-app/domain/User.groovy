@@ -30,7 +30,7 @@ class User {
         isAdmin nullable : true
         userName unique : true, nullable : false, blank : false
         image maxSize : 2*1024*1024
-        confirmPassword nullable : false
+        //confirmPassword nullable : false
     }
     static mapping = {
         sort userName: "desc"

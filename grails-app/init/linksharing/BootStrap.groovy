@@ -16,7 +16,7 @@ class BootStrap {
     }
 
     def createUsers() {
-        User adminUser = new User(firstName: 'Mohd', lastName: "Kashif", email: "mohdkashif1108@gmail.com", userName: "mdkshf", password: "123456", isAdmin: true, isActive: true)
+        User adminUser = new User(firstName: 'Mohd', lastName: "Kashif", email: "mohdkashif1108@gmail.com", userName: "mdkshf", password: "123456",confirmPassword: "123456" ,isAdmin: true, isActive: true)
         adminUser.validate()
         if (adminUser.hasErrors()) {
             log.info("Error in saving admin User")
@@ -25,7 +25,7 @@ class BootStrap {
             adminUser.save()
             log.info("Saving Admin User")
         }
-        User normalUser = new User(firstName: 'normal', lastName: 'user', email: 'normaluser@gmail.com', userName: 'normal.user', password: '123456', isAdmin: false, isActive: true)
+        User normalUser = new User(firstName: 'normal', lastName: 'user', email: 'normaluser@gmail.com', userName: 'normal.user', password: '123456',confirmPassword: "123456", isAdmin: false, isActive: true)
         normalUser.validate()
         if (normalUser.hasErrors()) {
             log.info("Error in saving normal User")
@@ -34,7 +34,7 @@ class BootStrap {
             normalUser.save()
             log.info("Saving Normal User")
         }
-        User user = new User(firstName: 'Dummy', lastName: 'user', email: 'dummyuser@gmail.com', userName: 'dummy.user', password: '123456', isAdmin: false, isActive: true)
+        User user = new User(firstName: 'Dummy', lastName: 'user', email: 'dummyuser@gmail.com', userName: 'dummy.user', password: '123456',confirmPassword: "123456", isAdmin: false, isActive: true)
         user.validate()
         if (user.hasErrors()) {
             log.info("Error in saving normal User")
@@ -44,7 +44,6 @@ class BootStrap {
             log.info("Saving Normal User")
         }
     }
-
     def createTopics() {
         User user = User.findByUserName("normal.user")
         log.info("User is " + user)

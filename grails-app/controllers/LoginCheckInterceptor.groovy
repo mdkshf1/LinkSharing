@@ -1,11 +1,10 @@
-/*
 package linksharing
 
 
 class LoginCheckInterceptor {
     public LoginCheckInterceptor
     {
-        match controller: "user", action: "index"
+        //match controller: "user", action: "index"
     }
     boolean before() { true }
 
@@ -15,4 +14,3 @@ class LoginCheckInterceptor {
         // no-op
     }
 }
-*/
