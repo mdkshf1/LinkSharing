@@ -1,3 +1,5 @@
+import CO.SearchCO
+
 class User {
     String firstName
     String lastName
@@ -35,7 +37,6 @@ class User {
     static mapping = {
         sort userName: "desc"
     }
-
     @Override
     public String toString() {
         return "User{" +
@@ -49,8 +50,14 @@ class User {
                 ", dateCreated=" + dateCreated +
                 ", lastUpdated=" + lastUpdated +
                 ", topics=" + topics +
-                ", subscriptions=" + subscriptions +
                 '}'
     }
-    static fetchMode = [resources: 'eager']
+    static fetchMode = [resources: 'eager',readingItems: 'eager']
+    def static getUnReadResources(SearchCO searchCO,User user)
+    {
+        if (searchCO == null) {
+            List<ReadingItem> readingItems = user.readingItems
+            println readingItems
+        }
+    }
 }

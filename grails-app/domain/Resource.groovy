@@ -9,6 +9,7 @@ abstract class Resource {
     Date dateCreated
     Date lastUpdated
     static hasMany = [readingItems : ReadingItem, ratings : ResourceRating]
+    static belongsTo = [topic: Topic]
     static mapping = {
         tablePerHierarchy false
     }
@@ -28,5 +29,31 @@ abstract class Resource {
                 eq 'topic',topic1
                 eq topic.visibility,co.visibility
         }
+    }
+    static def getResourceDetails() {
+        def getResourceDetails = Resource.createCriteria()
+        def result = getResourceDetails.list {
+            projections{
+                createAlias('ratings','rate')
+                count('rate.score')
+                sum('rate.score')
+                avg('rate.score')
+                groupProperty('rate.resource')
+            }
+                }
+        println "Rating is"
+        println result
+    }
+    static def getTopPost() {
+        def getTopPost = Resource.createCriteria()
+        def result = getTopPost.list {
+            projections{
+                createAlias('ratings','rate')
+                count('rate.score')
+                groupProperty('rate.resource')
+            }
+        }
+        println "Top post is"
+        println result
     }
 }

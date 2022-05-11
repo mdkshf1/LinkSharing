@@ -12,7 +12,14 @@ class BootStrap {
         if (Topic.count() == 0 && Resource.count() == 0) {
             createTopics()
         }
+
+        //notSubscribedTopics()
         //subscribeTopics()
+        println "notsubscribed topic"
+        User user = User.findByUserName("normal.user")
+        notSubscribedTopics(user)
+        User user1 = User.findByUserName("dummy.user")
+        notSubscribedTopics(user1)
     }
 
     def createUsers() {
@@ -58,8 +65,6 @@ class BootStrap {
             createLinkResource(topic1)
             log.info("Topic 1 saved")
         }
-        log.info("THis is subscription list")
-        log.info("subscriptions are " + user.subscriptions)
         Topic topic2 = new Topic(name: 'Java', visibility: Visibility.PRIVATE, createdBy: user)
         topic2.validate()
         if (topic2.hasErrors()) {
@@ -111,6 +116,8 @@ class BootStrap {
             log.info("Errors are " + documentResource1.errors)
         } else {
             documentResource1.save()
+            createReadingItems(documentResource1,topic.createdBy)
+            createResourceRatings(documentResource1)
             log.info("Document Resource 1 has been saved")
         }
         DocumentResource documentResource2 = new DocumentResource();
@@ -124,10 +131,11 @@ class BootStrap {
             log.info("Errors are " + documentResource2.errors)
         } else {
             documentResource2.save()
+            createReadingItems(documentResource2,topic.createdBy)
+            createResourceRatings(documentResource2)
             log.info("Document Resource 2 has been saved")
         }
     }
-
     def createLinkResource(Topic topic) {
         LinkResource linkResource1 = new LinkResource()
         linkResource1.setTopic(topic)
@@ -139,6 +147,8 @@ class BootStrap {
             log.info("Errors are " + linkResource1.errors)
         } else {
             linkResource1.save()
+            createReadingItems(linkResource1,topic.createdBy)
+            createResourceRatings(linkResource1)
             log.info("Link Resource 1 has been saved")
         }
         LinkResource linkResource2 = new LinkResource()
@@ -151,13 +161,54 @@ class BootStrap {
             log.info("Errors are " + linkResource2.errors)
         } else {
             linkResource2.save()
+            createReadingItems(linkResource2,topic.createdBy)
+            createResourceRatings(linkResource2)
             log.info("Link Resource 2 has been saved")
         }
     }
-    def createResourceRatings()
+
+    def createReadingItems(Resource resource,User user)
     {
-        User user = session.user
-        List<Resource> resources = user.getResources()
+        ReadingItem readingItem = new ReadingItem()
+        readingItem.setResource(resource)
+        readingItem.setIsRead(false)
+        readingItem.setUser(user)
+        println "Item jo read m add ho rha hai"
+        println readingItem
+        //readingItem.save()
+    }
+    def notSubscribedTopics(User user)
+    {
+        List<Resource> resources = Resource.findAll()
+        List<Resource> userResources = user.resources as List
+        println "User"
+        println user.getFullName()
+        println "All resources"
+        println resources
+        println "User ki resources"
+        println userResources
+        List<Resource> notReadCreated = resources - userResources
+        println "Read wali items"
+        println notReadCreated
+        resources.forEach(resource ->
+        {
+            createResourceRatings(resource)
+        })
+        notReadCreated.forEach(resource ->
+        {
+            createReadingItems(resource,user)
+            //createResourceRatings(resource)
+        })
+    }
+    def createResourceRatings(Resource resource)
+    {
+        ResourceRating rating = new ResourceRating()
+        Random random = new Random()
+        int n = random.nextInt(6)
+        rating.setResource(resource)
+        rating.setCreatedBy(resource.topic.createdBy)
+        rating.setScore(n)
+        rating.save()
     }
     def destroy = {
     }

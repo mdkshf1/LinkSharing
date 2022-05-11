@@ -11,8 +11,19 @@ class Subscription implements Serializable {
         topic nullable : true
         seriousness nullable : true
     }
+
     static mapping = {
         id composite:['topic', 'user']
     }
     static fetchMode = [user: 'eager',topic: 'eager']
+
+    @Override
+    public String toString() {
+        return "Subscription{" +
+                ", topic=" + topic.name +
+                ", seriousness=" + seriousness +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                '}';
+    }
 }

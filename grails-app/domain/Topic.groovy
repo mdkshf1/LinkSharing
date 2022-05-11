@@ -10,6 +10,7 @@ class Topic implements Serializable{
     User createdBy
     Date dateCreated
     Date lastUpdated
+    //subscription jo hai subscription hi hai
     Set<Subscription> subscriptions
     Set<Resource> resources
     static hasMany = [subscriptions : Subscription, resources : Resource]
@@ -21,13 +22,14 @@ class Topic implements Serializable{
     }
     def afterInsert()
     {
-        Topic.withNewSession {
-            //subscribtion table mai check krna hai k subscriber add hua k nahi
-            //run it without withNewSession or check krna hai k log ayga ya nahi
+        //Topic.withNewSession {
             Subscription subscription = new Subscription(user: createdBy,seriousness: Seriousness.SERIOUS,topic: this)
             log.info("Subscribing default user")
+            println subscription
             createdBy.addToSubscriptions(subscription)
-        }
+            subscription.save()
+            log.info("Subscribed default user")
+        //}
     }
     @Override
     public String toString() {
@@ -37,37 +39,25 @@ class Topic implements Serializable{
                 '}';
     }
     static mapping = {
-        //id composite:['name', 'createdBy']
+        //id composite:['topic', 'createdBy']
         sort "name"
     }
-    /*
-    static getTrendingTopic()
-    {
-        Integer max = 0,topicNumber=0
-        List<Topic> topics = Topic.findAll()
-        topics.forEach(topic-> {
-            println topic
-            Set<Resource> resources = topic.resources
-            topicNumber = resources.size()
-            if (max<topicNumber)
-                max = topicNumber
-        }
-        )
-        println "ALL of the resources"
-        println topics.resources
 
-        println max
-    }*/
-
-    static getTrendingTopic()
+    //projections mai list output kaise aa raha hai or kyu aa rha hai
+    static def getTrendingTopic()
     {
         def trendingTopics = Topic.createCriteria()
-        List<String> result = trendingTopics.list {
+        List<TopicCO> result = trendingTopics.list {
             projections{
-                count("resources")
+                createAlias('resources','r')
+                count("r.topic","countTopic")
+                groupProperty("r.topic")
             }
+            order("countTopic","desc")
+            order("name")
         }
-        println "Final result is"
+        println "REsult is"
         println result
+        result
     }
 }

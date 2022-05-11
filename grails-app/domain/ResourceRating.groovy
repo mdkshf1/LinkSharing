@@ -10,4 +10,15 @@ class ResourceRating {
         resource size : 1..5, nullable : false
         score nullable : false
     }
+
+    @Override
+    public String toString() {
+        return "ResourceRating{" +
+                "createdBy=" + createdBy +
+                ", score=" + score +
+                ", resource=" + resource +
+                ", dateCreated=" + dateCreated +
+                ", lastUpdated=" + lastUpdated +
+                '}';
+    }
 }
