@@ -175,7 +175,7 @@ class BootStrap {
         readingItem.setUser(user)
         println "Item jo read m add ho rha hai"
         println readingItem
-        //readingItem.save()
+        readingItem.save()
     }
     def notSubscribedTopics(User user)
     {

@@ -20,11 +20,16 @@ class ReadingItem implements Serializable{
     @Override
     public String toString() {
         return "ReadingItem{" +
-                "user=" + user +
                 ", isRead=" + isRead +
-                ", resource=" + resource +
+                ", resource=" + resource.topic.name +
                 ", dateCreated=" + dateCreated +
                 ", lastUpdated=" + lastUpdated +
                 '}';
+    }
+
+    def static getUnReadResources(User user)
+    {
+        def unreadResource = ReadingItem.executeQuery("from readingItem")
+        println unreadResource
     }
 }

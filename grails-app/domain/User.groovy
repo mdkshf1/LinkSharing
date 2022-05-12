@@ -36,28 +36,23 @@ class User {
     }
     static mapping = {
         sort userName: "desc"
+        readingItems lazy : false
     }
+
+    //static fetchMode = [resources: "eager",readingItems: "eager"]
+
+/*    def static getUnReadResources(User user)
+    {
+        def unreadResource = executeQuery("from resource r where")
+    }*/
+
+
     @Override
     public String toString() {
         return "User{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", isActive=" + isActive +
-                ", isAdmin=" + isAdmin +
-                ", dateCreated=" + dateCreated +
-                ", lastUpdated=" + lastUpdated +
-                ", topics=" + topics +
-                '}'
-    }
-    static fetchMode = [resources: 'eager',readingItems: 'eager']
-    def static getUnReadResources(SearchCO searchCO,User user)
-    {
-        if (searchCO == null) {
-            List<ReadingItem> readingItems = user.readingItems
-            println readingItems
-        }
+                '}';
     }
 }
