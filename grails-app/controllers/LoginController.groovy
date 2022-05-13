@@ -96,4 +96,12 @@ class LoginController {
             }
         }
     }
+    def log()
+    {
+        render(view : 'login')
+    }
+    def reg()
+    {
+        render(view: 'registerform')
+    }
 }
