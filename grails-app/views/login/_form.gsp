@@ -71,5 +71,4 @@
         <li>${it}</li>
     </g:print>--}%
     <my:example hello="false">THIS IS AWESOME TAG</my:example>
-
 </div>

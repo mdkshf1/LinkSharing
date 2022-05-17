@@ -59,6 +59,16 @@
                 <strong class="centered"><a href="https://slack.grails.org" target="_blank">Join the Community</a></strong>
                 <p>Get feedback and share your experience with other Grails developers in the community <a href="https://slack.grails.org" target="_blank">Slack channel</a>.</p>
             </div>
+            <div>
+                <g:if test="${flash.error}">
+                    <div>${flash.error}</div>
+                </g:if>
+            </div>
+            <div>
+                <g:elseif test="${flash.message}">
+                    <div>${flash.message}</div>
+                </g:elseif>
+            </div>
         </div>
     </div>
 </div>

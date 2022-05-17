@@ -102,6 +102,10 @@ class LoginController {
     }
     def reg()
     {
-        render(view: 'registerform')
+        render(view: 'layoutpage')
+    }
+    def forgotPassword()
+    {
+        render "Forget Password Page"
     }
 }
